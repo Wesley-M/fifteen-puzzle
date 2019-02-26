@@ -334,3 +334,24 @@ document.onkeydown = function(e) {
             break;
     }
 };
+
+body = document.body;
+var hammertime = new Hammer(body);
+hammertime.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+
+hammertime.on("swipeleft swiperight swipeup swipedown", function(ev) {
+	switch(ev.type){
+    case "swipeleft": // Left
+        board.movePiece("left");
+        break;
+    case "swipeup": // Up
+        board.movePiece("up");
+        break;
+    case "swiperight": // Right
+        board.movePiece("right");
+        break;
+    case "swipedown": // Down
+        board.movePiece("down");
+        break;
+  }
+});

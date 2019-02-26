@@ -11,7 +11,7 @@ body {
   background-repeat: no-repeat;
   background-position: center;
   background-color: rgb(210, 214, 215);
-  background-size: contain;
+  background-size: cover;
 
   display: flex;
   justify-content: center;
@@ -21,88 +21,10 @@ body {
   z-index: 1;
 }
 
-#congrats {
-  font-weight: 900;
-  font-size: 6.5em;
-  overflow: hidden;
-  z-index: 10;
-}
-
-#congrats .letter {
-  display: inline-block;
-  line-height: 1em;
-  color: rgb(237, 174, 12);
-}
-
-#game-name {
-  font-size: 110px;
-  color: white;
-}
-
-#start-button {
-  height: 60px;
-  width: 150px;
-  position: relative;
-  left: 25%;
-  background-color: transparent;
-  color: rgb(240, 240, 240);
-  font-size: 40px;
-  border: solid 2px rgb(245, 245, 245);
-  border-radius: 30px;
-  transition: border-width 0.4s, background-color 1s linear;
-}
-
-#start-button:hover {
-  background-color: rgba(76, 82, 91, 0.59);
-  color: white;
-  border-color: white;
-  border-width: 1px;
-  cursor: pointer;
-}
-
-#options {
-  display: flex;
-}
-
-#restart-btn, #no-sound-btn {
-  width: 50px;
-  height: 50px;
-  padding-top: 15px;
-  margin: 0 auto;
-}
-
-#restart-btn:hover, #no-sound-btn:hover{
-  cursor: pointer;
-}
-
-#board-container {
-  background-color: rgb(207, 200, 163);
-  padding: 5px;
-  padding-top: 120px;
-  padding-bottom: 20px;
-  border-radius: 7px;
-  box-shadow: -5px 5px 2px 4px rgb(122, 132, 136);
-  position: fixed;
-  width: 25%;
-}
+/* Design of the board and its cells */
 
 table {
     margin: 30px;
-}
-
-#header-board-container {
-  background-color: rgba(47, 108, 53, 0.82);
-  color: rgb(49, 50, 49);
-  font-size: 1.8em;
-  position: absolute;
-  top: 50px;
-  width: 90%;
-  padding: 10px;
-  display: flex;
-}
-
-.statistic {
-  flex: 1;
 }
 
 td {
@@ -122,8 +44,104 @@ td {
   box-shadow: -5px 5px .5px 2px #b9ab6e;
   font-size: 3em;
   text-align: center;
-  text-decoration: none;}
+  text-decoration: none;
+}
+
+/* Design of the main page and its components */
+
+#game-name {
+  font-size: 110px;
+  color: rgba(124, 151, 159, 0.94);
+}
+
+#start-button {
+  height: 60px;
+  width: 150px;
+  position: relative;
+  left: 25%;
+  background-color: transparent;
+  color: rgba(124, 151, 159, 0.94);
+  font-size: 40px;
+  border: solid 2px rgba(124, 151, 159, 0.94);
+  border-radius: 30px;
+  transition: border-width 0.4s, background-color 1s linear;
+}
+
+#start-button:hover {
+  background-color: rgba(76, 82, 91, 0.59);
+  color: white;
+  border-color: white;
+  border-width: 1px;
+  cursor: pointer;
+}
+
+/* Design of the board and its components */
+
+#board-container {
+  background-color: rgb(207, 200, 163);
+  padding: 5px;
+  padding-top: 120px;
+  padding-bottom: 20px;
+  border-radius: 7px;
+  box-shadow: -5px 5px 2px 4px rgb(122, 132, 136);
+  position: fixed;
+  width: 330px;
+}
+
+#header-board-container {
+  background-color: rgba(47, 108, 53, 0.82);
+  color: rgb(49, 50, 49);
+  font-size: 1.8em;
+  position: absolute;
+  top: 50px;
+  width: 90%;
+  padding: 10px;
+  display: flex;
+}
+
+.statistic {
+  flex: 1;
+}
+
+#options {
+  display: flex;
+}
+
+#restart-btn, #no-sound-btn {
+  width: 50px;
+  height: 50px;
+  padding-top: 15px;
+  margin: 0 auto;
+}
+
+#restart-btn:hover, #no-sound-btn:hover{
+  cursor: pointer;
+}
+
+#congrats {
+  font-weight: 900;
+  font-size: 6.5em;
+  overflow: hidden;
+  z-index: 10;
+}
+
+#congrats .letter {
+  display: inline-block;
+  line-height: 1em;
+  color: rgb(237, 174, 12);
+}
 
 .correct-cell {
   color: rgb(235, 200, 16);
+}
+
+@media screen and (max-width: 600px) {
+  #game-name {
+    font-size: 60px;
+  }
+
+  #start-button{
+    width: 110px;
+    height: 50px;
+  }
 }
