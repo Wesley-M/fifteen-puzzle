@@ -1,5 +1,10 @@
+@font-face {
+  font-family: iomanoid;
+  src: url(../font/iomanoid.ttf);
+}
+
 * {
-  font-family: 'VT323', monospace;
+    font-family: 'VT323', monospace;
 }
 
 html, body {
@@ -28,20 +33,17 @@ table {
 }
 
 td {
-  background: url("../img/porcelain.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  color: rgba(0, 0, 0, 0.80);
+  background-color: rgb(245, 227, 184);
+  color: rgba(0, 0, 0, 0.85);
 
-  border-radius: 6px;
+  border-radius: 4px;
   width: 1em;
   height: 1em;
   margin: 8px;
 
   display: inline-block;
   letter-spacing: 1px;
-  box-shadow: -5px 5px .5px 2px #b9ab6e;
+  box-shadow: -4px 3px .5px 2px rgb(205, 190, 154);
   font-size: 3em;
   text-align: center;
   text-decoration: none;
@@ -50,8 +52,10 @@ td {
 /* Design of the main page and its components */
 
 #game-name {
+  font-family: iomanoid !important;
   font-size: 110px;
-  color: rgba(124, 151, 159, 0.94);
+  color: rgba(0,0,0,0.9);
+  font-weight: bold;
 }
 
 #start-button {
@@ -59,10 +63,10 @@ td {
   width: 150px;
   position: relative;
   left: 25%;
-  background-color: transparent;
-  color: rgba(124, 151, 159, 0.94);
+  background-color: rgba(143, 8, 32, 0.84);
+  color: rgba(0,0,0,0.90);
   font-size: 40px;
-  border: solid 2px rgba(124, 151, 159, 0.94);
+  border: solid 1px rgba(0,0,0,0.90);
   border-radius: 30px;
   transition: border-width 0.4s, background-color 1s linear;
 }
@@ -78,18 +82,19 @@ td {
 /* Design of the board and its components */
 
 #board-container {
-  background-color: rgb(207, 200, 163);
+  background-color: rgba(136, 49, 43, 0.7);
   padding: 5px;
   padding-top: 120px;
   padding-bottom: 20px;
-  border-radius: 7px;
-  box-shadow: -5px 5px 2px 4px rgb(122, 132, 136);
+  border-radius: 4px;
+  box-shadow: -5px 5px 0px 4px rgba(0, 0, 0, 0.7);
   position: fixed;
   width: 330px;
+  height: 370px;
 }
 
 #header-board-container {
-  background-color: rgba(47, 108, 53, 0.82);
+  background-color: rgba(227, 174, 120, 0.82);
   color: rgb(49, 50, 49);
   font-size: 1.8em;
   position: absolute;
@@ -108,9 +113,8 @@ td {
 }
 
 #restart-btn, #no-sound-btn {
-  width: 50px;
-  height: 50px;
-  padding-top: 15px;
+  width: 40px;
+  height: 40px;
   margin: 0 auto;
 }
 
