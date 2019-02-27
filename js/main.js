@@ -40,7 +40,7 @@ background_sound.loop(true);
 move_sound = new Sound("snd/neutral.wav", 0.5);
 positive_sound = new Sound("snd/positive.wav", 0.2);
 
-congratulations_sound = new Sound("snd/congratulations.ogg", 1);
+congratulations_sound = new Sound("snd/you_win.ogg", 1);
 win_sound = new Sound("snd/winning.wav", 1);
 
 // Congratulate user that cleared the game
@@ -49,7 +49,7 @@ var congratulate = function () {
   win_sound.play();
   setTimeout(function(){ congratulations_sound.play(); }, 1500);
 
-  $("body").append("<h1 id='congrats'>Congratulations!</h1>");
+  $("body").append("<h1 id='congrats'>You Win!</h1>");
 
   // Wrap every letter in a span
   $('#congrats').each(function(){

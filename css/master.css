@@ -157,4 +157,8 @@ td {
     width: 110px;
     height: 50px;
   }
+
+  #congrats {
+    font-size: 5em;
+  }
 }
