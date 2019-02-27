@@ -3,9 +3,10 @@ const board_length = 4;
 /* Here is defined the sound object, which has options
 of play, stop or loop a song. */
 
-function Sound(src) {
+function Sound(src, vol) {
     this.sound = document.createElement("audio");
     this.sound.src = src;
+    this.sound.volume = vol;
     this.sound.setAttribute("preload", "auto");
     this.sound.setAttribute("controls", "none");
     this.sound.style.display = "none";
@@ -33,14 +34,14 @@ function Sound(src) {
 }
 
 // Load and set all the sounds needed
-background_sound = new Sound("snd/woodland-fantasy.mp3");
+background_sound = new Sound("snd/creepy.mp3", 1);
 background_sound.loop(true);
 
-move_sound = new Sound("snd/neutral.wav");
-positive_sound = new Sound("snd/positive.wav");
+move_sound = new Sound("snd/neutral.wav", 0.5);
+positive_sound = new Sound("snd/positive.wav", 0.2);
 
-congratulations_sound = new Sound("snd/congratulations.ogg");
-win_sound = new Sound("snd/winning.wav");
+congratulations_sound = new Sound("snd/congratulations.ogg", 1);
+win_sound = new Sound("snd/winning.wav", 1);
 
 // Congratulate user that cleared the game
 var congratulate = function () {
@@ -78,6 +79,8 @@ var congratulate = function () {
       win_sound.stop();
       $("#congrats").remove();
     }, 5500);
+
+    background_sound.play();
 }
 
 // Representation of the game board
@@ -270,6 +273,7 @@ function Board() {
           pieces[empty_x+1][empty_y] = undefined;
           is_correct_position(pieces[empty_x][empty_y]);
           empty_x++;
+          moves++;
         }
         break;
       case "down":
@@ -278,6 +282,7 @@ function Board() {
           pieces[empty_x-1][empty_y] = undefined;
           is_correct_position(pieces[empty_x][empty_y]);
           empty_x--;
+          moves++;
         }
         break;
       case "left":
@@ -286,6 +291,7 @@ function Board() {
           pieces[empty_x][empty_y+1] = undefined;
           is_correct_position(pieces[empty_x][empty_y]);
           empty_y++;
+          moves++;
         }
         break;
       case "right":
@@ -294,10 +300,10 @@ function Board() {
           pieces[empty_x][empty_y-1] = undefined;
           is_correct_position(pieces[empty_x][empty_y]);
           empty_y--;
+          moves++;
         }
     }
 
-    moves++;
     this.drawBoard();
 
   }

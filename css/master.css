@@ -3,8 +3,13 @@
   src: url(../font/iomanoid.ttf);
 }
 
+@font-face {
+  font-family: VT323;
+  src: url(../font/VT323.ttf);
+}
+
 * {
-    font-family: 'VT323', monospace;
+    font-family: VT323, monospace;
 }
 
 html, body {
@@ -51,9 +56,13 @@ td {
 
 /* Design of the main page and its components */
 
+#menu-game {
+  text-align: center;
+}
+
 #game-name {
   font-family: iomanoid !important;
-  font-size: 110px;
+  font-size: 9vw;
   color: rgba(0,0,0,0.9);
   font-weight: bold;
 }
@@ -62,10 +71,9 @@ td {
   height: 60px;
   width: 150px;
   position: relative;
-  left: 25%;
   background-color: rgba(143, 8, 32, 0.84);
   color: rgba(0,0,0,0.90);
-  font-size: 40px;
+  font-size: 4vw;
   border: solid 1px rgba(0,0,0,0.90);
   border-radius: 30px;
   transition: border-width 0.4s, background-color 1s linear;
@@ -82,12 +90,12 @@ td {
 /* Design of the board and its components */
 
 #board-container {
-  background-color: rgba(136, 49, 43, 0.7);
+  background-color: rgba(136, 49, 43, 0.8);
   padding: 5px;
   padding-top: 120px;
   padding-bottom: 20px;
   border-radius: 4px;
-  box-shadow: -5px 5px 0px 4px rgba(0, 0, 0, 0.7);
+  box-shadow: -3px 3px 0px 4px rgba(0, 0, 0, 0.7);
   position: fixed;
   width: 330px;
   height: 370px;
@@ -141,10 +149,11 @@ td {
 
 @media screen and (max-width: 600px) {
   #game-name {
-    font-size: 60px;
+    font-size: 15vw;
   }
 
   #start-button{
+    font-size: 10vw;
     width: 110px;
     height: 50px;
   }
