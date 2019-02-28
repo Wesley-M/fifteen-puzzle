@@ -11,16 +11,35 @@
     <title>15 Puzzle</title>
   </head>
   <body>
+
     <div id="menu-game">
       <span><p id="game-name">15 Puzzle</p></span>
       <span><button id="start-button" type="button"> PLAY </button></span>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <div id='board-container'>
+      <div id='header-board-container'>
+        <span id='number-of-moves'>MOVES: 0</span>
+        <span id='timer'></span>
+      </div>
 
-    <script src="lib/move.js" charset="utf-8"></script>
+      <div id='progress-bar'><p></p></div>
+
+      <table>
+      </table>
+
+      <a class='options'>
+        <img id='restart-btn' title='restart' src='img/restart.png'/>
+        <img id='no-sound-btn' title='no background sound' src='img/no_sound.png'/>
+      </a>
+    </div>
+
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/anime.min.js"></script>
     <script src="lib/hammer.min.js" charset="utf-8"></script>
+    <script src="js/board.js" charset="utf-8"></script>
+    <script src="js/sound.js" charset="utf-8"></script>
+    <script src="js/timer.jquery.js" charset="utf-8"></script>
     <script src="js/main.js" charset="utf-8"></script>
   </body>
 </html>
