@@ -28,7 +28,6 @@ body {
   align-items: center;
 
   overflow-y: hidden;
-  z-index: 1;
 }
 
 /* Design of the board and its cells */
@@ -91,11 +90,11 @@ td {
 /* Design of the game's stats */
 
 #progress-bar{
-  width: 240px;
+  width: 252px;
   height: 20px;
   position: relative;
-  top: -50px;
-  margin-left: 40px;
+  top: -65px;
+  margin-left: 38px;
   background: linear-gradient(90deg, #eee 50%, transparent 50%);
   background-color: rgb(228, 174, 122);
   background-size: 200%;
@@ -153,6 +152,7 @@ td {
   width: 330px;
   height: 370px;
   display: none;
+  z-index: 1;
 }
 
 #header-board-container {
@@ -161,13 +161,15 @@ td {
   font-size: 1.3em;
   position: relative;
   top: -90px;
-  width: 310px;
+  width: 230px;
   padding: 10px;
+  margin-left: 40px;
   display: flex;
 }
 
 #header-board-container span {
   flex: 1;
+  text-align: center;
 }
 
 .options {
@@ -184,11 +186,37 @@ td {
   cursor: pointer;
 }
 
-#congrats {
-  font-weight: 900;
-  font-size: 6.5em;
+/* Design of congratulation message */
+
+.blur {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0,0,0,0.7);
+  -webkit-filter: blur(20px);
+  -moz-filter: blur(20px);
+  -ms-filter: blur(20px);
+  -o-filter: blur(20px);
+  filter: blur(20px);
+  position: absolute;
+}
+
+#congratulation-message-container {
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  position: fixed;
+  display: none;
+}
+
+#congrats-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(249, 157, 0);
+  font-size: 5em;
   overflow: hidden;
-  z-index: 10;
+  z-index: 3;
 }
 
 #congrats .letter {

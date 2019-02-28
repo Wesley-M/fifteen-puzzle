@@ -18,16 +18,16 @@ var congratulate = function () {
   win_sound.play();
   setTimeout(function(){ congratulations_sound.play(); }, 1500);
 
-  $("body").append("<h1 id='congrats'>You Win!</h1>");
+  $("#congratulation-message-container").css("display", "flex");
 
   // Wrap every letter in a span
-  $('#congrats').each(function(){
+  $('#congrats-message').each(function(){
     $(this).html($(this).text().replace(/([a-zA-Z]|\w|!)/g, "<span class='letter'>$&</span>"));
   });
 
   anime.timeline({loop: true})
     .add({
-      targets: '#congrats .letter',
+      targets: '#congrats-message .letter',
       scale: [4,1],
       opacity: [0,1],
       translateZ: 0,
@@ -37,7 +37,7 @@ var congratulate = function () {
         return 70*i;
       }
     }).add({
-      targets: '#congrats',
+      targets: '#congrats-message',
       opacity: 0,
       duration: 1000,
       easing: "easeOutExpo",
@@ -46,7 +46,7 @@ var congratulate = function () {
 
     setTimeout(function (){
       win_sound.stop();
-      $("#congrats").remove();
+      $("#congratulation-message-container").remove();
     }, 5500);
 
     background_sound.play();

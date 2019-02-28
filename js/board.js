@@ -103,8 +103,10 @@ function Board() {
 
   /* Initiate the board */
   this.init = function () {
-    if (typeof clock === 'undefined'){
+    if (typeof clock === "undefined"){
       clock = new Timer("#timer");
+      clock.init();
+      clock.execute();
     } else {
       clock.restart();
     }
@@ -115,9 +117,6 @@ function Board() {
     restartNumberOfMoves();
     generate_empty_board();
     this.populate();
-
-    clock.init();
-    clock.execute();
   }
 
   /* Populate the board */
@@ -130,6 +129,8 @@ function Board() {
 
     var index_shuffle = 0;
 
+    shuffled_elements = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+    
     for(var i=0; i<board_length; i++) {
         for (var j=0; j<board_length; j++){
           pieces[i][j] = shuffled_elements[index_shuffle];
