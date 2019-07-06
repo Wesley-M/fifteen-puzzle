@@ -2,6 +2,7 @@
 of play, stop or loop a song. */
 
 function Sound(src, vol) {
+
     this.sound = document.createElement("audio");
     this.sound.src = src;
     this.sound.volume = vol;
@@ -12,21 +13,21 @@ function Sound(src, vol) {
     document.body.appendChild(this.sound);
 
     this.play = function(){
-        this.sound.play();
-        this.status = true;
+      this.sound.play();
+      this.status = true;
     }
+
     this.stop = function(){
         this.sound.pause();
         this.status = false;
     }
+
     this.loop = function (type) {
       this.sound.loop = type;
     }
+
     this.toggle = function () {
-      if (this.status)
-        this.stop();
-      else {
-        this.play();
-      }
+      (this.status) ? this.stop : this.play();
     }
+
 }

@@ -143,7 +143,7 @@ td {
 /* Design of the board and its components */
 
 #board-container {
-  background-color: rgba(136, 49, 43, 0.8);
+  background-color: rgba(136, 49, 43, 0.95);
   padding: 5px;
   padding-top: 120px;
   padding-bottom: 20px;
