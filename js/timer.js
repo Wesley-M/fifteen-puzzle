@@ -3,47 +3,65 @@ function Timer(el) {
   var minutes;
   var seconds;
   var element = el;
-  var is_paused;
+  var isPaused;
+  var timerInterval;
 
   var init = function() {
     minutes = 0;
     seconds = 0;
-    is_paused = false;
+    isPaused = false;
   }
 
-  var padStartTime = function (number){
-    return (number+"").padStart(2,0);
-  }
-
-  this.execute = function () {
+  this.start = function () {
     init();
-    $(el).append("00:00");
-    setInterval(function() {
-      if (!is_paused){
+    writeInTimer("00", "00");
+    timerInterval = setInterval(function() {
+      if (!isPaused) {
         seconds++;
-        if (seconds === 60){
+        if (seconds === 60) {
           minutes++;
           seconds = 0;
-          if (minutes === 60){
+          if (minutes === 60) {
             clearInterval();
           }
         }
-        $(el).empty();
-        $(el).append(padStartTime(minutes) + ":" + padStartTime(seconds));
+        writeInTimer(minutes, seconds);
       }
     }, 1000);
   }
 
   this.pause = function () {
-    is_paused = true;
+    isPaused = true;
   }
 
   this.resume = function () {
-    is_paused = false;
+    isPaused = false;
   }
 
-  this.restart = function () {
-    minutes = 0;
-    seconds = 0;
+  this.reset = function () {
+    init();
+    this.pause();
+    if (timerInterval != "undefined") {
+      clearInterval(timerInterval);
+    }
+    writeInTimer(minutes, seconds);
   }
+
+  this.isRunning = function () {
+    return (isPaused != undefined) ? !isPaused : false;
+  }
+
+  var writeInTimer = function (minutes, seconds) {
+    $(el).empty();
+    $(el).append(formatTime(minutes, seconds));
+  }
+
+  var padTime = function (number) {
+    return (number + "").padStart(2,0);
+  }
+
+  var formatTime = function (minutes, seconds) {
+    return padTime(minutes) + ":" + padTime(seconds)
+  }
+
 }

@@ -98,16 +98,8 @@ function Board() {
 
   /* Initiate the board */
   this.init = function () {
-    if (typeof clock === "undefined"){
-      clock = new Timer("#timer");
-      clock.execute();
-    } else {
-      clock.restart();
-    }
-
     emptyX = 3;
     emptyY = 3;
-
     restartNumberOfMoves();
     generate_empty_board();
     this.populate();

@@ -1,17 +1,21 @@
 function Game() {
 
   var board = new Board();
+  var timer = new Timer("#timer");
+
   var self = this;
 
   this.play = function () {
     this.initEvents();
     board.init();
+    timer.reset();
     this.renderBoard();
   }
 
   this.restart = function () {
     RESTART_SOUND.play();
     board.init();
+    timer.reset();
     setTimeout(function(){ self.renderBoard(); }, 300);
   }
 
@@ -32,6 +36,7 @@ function Game() {
     document.onkeydown = function(e) {
       keyCode = e.keyCode;
       if (keyCode in KEYS_MOVES) {
+        if (!timer.isRunning()) timer.start();
         board.move(KEYS_MOVES[keyCode]);
         self.renderBoard();
       }
@@ -43,6 +48,7 @@ function Game() {
     hammertime.on("swipeleft swiperight swipeup swipedown", function(ev) {
       typeOfEvent = ev.type;
       if (typeOfEvent in EVENTS_MOVES) {
+        if (!timer.isRunning()) timer.start();
         board.move(EVENTS_MOVES[typeOfEvent]);
         self.renderBoard();
       }
