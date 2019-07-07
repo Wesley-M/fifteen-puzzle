@@ -27,7 +27,7 @@ function Sound(src, vol) {
     }
 
     this.toggle = function () {
-      (this.status) ? this.pause : this.play();
+      (this.status) ? this.stop() : this.play();
     }
 
 }
