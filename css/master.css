@@ -174,19 +174,20 @@ td {
 
 .options {
   display: flex;
-  background-color: rgb(214, 143, 108);
+  background-color: rgba(245, 227, 184, 0.9);
   padding: 5px;
   margin-left: 35px;
   margin-right: 50px;
+  border-radius: 8px;
 }
 
-#restart-btn, #no-sound-btn {
+#restart-btn, #music-on, #music-off {
   width: 35px;
   height: 35px;
   margin: 0 auto;
 }
 
-#restart-btn:hover, #no-sound-btn:hover{
+#restart-btn:hover, #music-on:hover, #music-off:hover{
   cursor: pointer;
 }
 

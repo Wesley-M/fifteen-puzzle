@@ -1,10 +1,11 @@
 function Timer(el) {
+
   var minutes;
   var seconds;
   var element = el;
   var is_paused;
 
-  this.init = function(el) {
+  var init = function() {
     minutes = 0;
     seconds = 0;
     is_paused = false;
@@ -15,6 +16,7 @@ function Timer(el) {
   }
 
   this.execute = function () {
+    init();
     $(el).append("00:00");
     setInterval(function() {
       if (!is_paused){
@@ -26,7 +28,6 @@ function Timer(el) {
             clearInterval();
           }
         }
-
         $(el).empty();
         $(el).append(padStartTime(minutes) + ":" + padStartTime(seconds));
       }

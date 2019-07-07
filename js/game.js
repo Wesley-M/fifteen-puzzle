@@ -1,26 +1,31 @@
 function Game() {
 
   var board = new Board();
+  var self = this;
 
-  this.play = function() {
+  this.play = function () {
     this.initEvents();
     board.init();
     this.renderBoard();
   }
 
-  this.initEvents = function() {
+  this.restart = function () {
+    RESTART_SOUND.play();
+    board.init();
+    setTimeout(function(){ self.renderBoard(); }, 300);
+  }
 
-    let self = this;
+  this.initEvents = function() {
 
     // Handle click in restart button
     $("#restart-btn").click(function(){
-      board.init();
-      setTimeout(function(){ self.renderBoard(); }, 1000);
+      self.restart();
     });
 
     // handle click in toggle sound button
-    $("#no-sound-btn").click(function(){
+    $("#music-off, #music-on").click(function(){
       BACKGROUND_SOUND.toggle();
+      $("#music-off, #music-on").toggle();
     });
 
     // Handle the arrow keys

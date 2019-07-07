@@ -11,6 +11,8 @@ POSITIVE_SOUND = new Sound("snd/positive.wav", 0.2);
 CONGRATULATIONS_SOUND = new Sound("snd/you_win.ogg", 1);
 WIN_SOUND = new Sound("snd/winning.wav", 1);
 
+RESTART_SOUND = new Sound("snd/collect.ogg", 0.4);
+
 // Keys for moves
 
 KEYS_MOVES = {

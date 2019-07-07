@@ -100,7 +100,6 @@ function Board() {
   this.init = function () {
     if (typeof clock === "undefined"){
       clock = new Timer("#timer");
-      clock.init();
       clock.execute();
     } else {
       clock.restart();
