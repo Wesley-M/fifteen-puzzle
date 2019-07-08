@@ -96,6 +96,7 @@ function Game() {
 
   this.congratulate = function() {
     WIN_SOUND.play();
+    timer.reset();
     setTimeout(function(){ CONGRATULATIONS_SOUND.play(); }, 1500);
     board.init();
   }
