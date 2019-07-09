@@ -11,7 +11,7 @@
   </head>
   <body>
 
-    <div id='board-container'>
+    <div id="game-board" class="board-container">
       <div id='header-board-container'>
         <span id='number-of-moves'>MOVES: 0</span>
         <span id='timer'></span>
@@ -26,6 +26,14 @@
         <img id='music-off' title='background sound off' src='img/music_off.png'/>
         <img id='music-on' title='background sound on' src='img/music_on.png' style="display: none"/>
       </a>
+    </div>
+
+    <div id="congratulations-container" class="board-container">
+      <span class="statistics">
+        <span id="stats-moves"></span>
+        <span id="stats-timer"></span>
+      </span>
+      <img id="trophy-img" src="img/trophy-gold.png" alt="Trophy">
     </div>
 
     <script src="lib/jquery.min.js"></script>

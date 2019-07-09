@@ -2,10 +2,11 @@ function Game() {
 
   var board = new Board();
   var timer = new Timer("#timer");
-
   var self = this;
+  var showingWinScreen = false;
 
   this.play = function () {
+    this.congratulate();
     this.initEvents();
     board.init();
     timer.reset();
@@ -91,14 +92,27 @@ function Game() {
     $("#progress-bar").css("backgroundPosition", percentageOfCorrectMoves + "%");
     $("#progress-bar p").text(percentageOfCorrectMoves + "%");
 
-    $("#board-container").css("display", "block");
+    if (!showingWinScreen) {
+      $("#game-board").show();
+    }
   }
 
   this.congratulate = function() {
-    WIN_SOUND.play();
     timer.reset();
-    setTimeout(function(){ CONGRATULATIONS_SOUND.play(); }, 1500);
+    WIN_SOUND.play();
+    CONGRATULATIONS_SOUND.play();
+    $("#game-board").hide();
+    $("#congratulations-container").show();
+    $("#stats-moves").text("Number of moves: " + board.getNumberOfMoves());
+    $("#stats-timer").text("Time: " + timer.getTime());
+    showingWinScreen = true;
+    setTimeout (function () {
+      $("#game-board").show();
+      $("#congratulations-container").hide();
+      showingWinScreen = false;
+    }, 2000);
     board.init();
   }
+
 
 }

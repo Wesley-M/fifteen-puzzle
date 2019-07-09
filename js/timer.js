@@ -51,6 +51,10 @@ function Timer(el) {
     return (isPaused != undefined) ? !isPaused : false;
   }
 
+  this.getTime = function () {
+      return formatTime(minutes, seconds);
+  }
+
   var writeInTimer = function (minutes, seconds) {
     $(el).empty();
     $(el).append(formatTime(minutes, seconds));
