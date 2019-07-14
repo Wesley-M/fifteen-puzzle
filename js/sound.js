@@ -1,33 +1,37 @@
-/* Here is defined the sound object, which has options
-of play, stop or loop a song. */
+class Sound {
+  constructor(filename, volume, loop=false) {
+    this._audioElement = document.createElement("audio");
+    this._configAudioElement(filename, volume, loop);
+    this.running = false;
+  }
 
-function Sound(src, vol) {
+  _configAudioElement(filename, volume, loop) {
+    this._audioElement.src = filename;
+    this._audioElement.volume = volume;
+    this._audioElement.setAttribute("preload", "auto");
+    this._audioElement.setAttribute("controls", "none");
+    this._audioElement.style.display = "none";
+    this._audioElement.loop = loop;
+    document.body.appendChild(this._audioElement);
+  }
 
-    this.sound = document.createElement("audio");
-    this.sound.src = src;
-    this.sound.volume = vol;
-    this.sound.setAttribute("preload", "auto");
-    this.sound.setAttribute("controls", "none");
-    this.sound.style.display = "none";
-    this.status = false;
-    document.body.appendChild(this.sound);
+  play() {
+    this._audioElement.play();
+    this.running = true;
+  }
 
-    this.play = function(){
-      this.sound.play();
-      this.status = true;
-    }
+  stop() {
+    this._audioElement.pause();
+    this.running = false;
+  }
 
-    this.stop = function(){
-        this.sound.pause();
-        this.status = false;
-    }
+  loop(type) {
+    this._audioElement.loop = type;
+  }
 
-    this.loop = function (type) {
-      this.sound.loop = type;
-    }
-
-    this.toggle = function () {
-      (this.status) ? this.stop() : this.play();
-    }
+  toggle() {
+    if (this.running) this.stop();
+    else this.play();
+  }
 
 }

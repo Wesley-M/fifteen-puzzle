@@ -1,4 +1,4 @@
 $(document).ready(function() {
-  fifteenPuzzle = new Game();
+  let fifteenPuzzle = new Game();
   fifteenPuzzle.play();
 });

@@ -1,71 +1,73 @@
-function Timer(el) {
-
-  var minutes;
-  var seconds;
-  var element = el;
-  var isPaused;
-  var timerInterval;
-
-  var init = function() {
-    minutes = 0;
-    seconds = 0;
-    isPaused = false;
+class Timer {
+  
+  constructor(el) {
+    this._minutes = 0;
+    this._seconds = 0;
+    this._element = el;
+    this._isPaused = false;
+    this._timerInterval;
   }
 
-  this.start = function () {
-    init();
-    writeInTimer("00", "00");
-    timerInterval = setInterval(function() {
-      if (!isPaused) {
-        seconds++;
-        if (seconds === 60) {
-          minutes++;
-          seconds = 0;
-          if (minutes === 60) {
+  _init() {
+    this._minutes = 0;
+    this._seconds = 0;
+    this._isPaused = false;
+  }
+
+  start() {
+    this._init();
+    this._writeInTimer("00", "00");
+    this._timerInterval = setInterval(() => {
+      if (!this._isPaused) {
+        this._seconds++;
+        if (this._seconds === 60) {
+          this._minutes++;
+          this._seconds = 0;
+          if (this._minutes === 60) {
             clearInterval();
           }
         }
-        writeInTimer(minutes, seconds);
+        this._writeInTimer(this._minutes, this._seconds);
       }
     }, 1000);
   }
 
-  this.pause = function () {
-    isPaused = true;
+  pause() {
+    this._isPaused = true;
   }
 
-  this.resume = function () {
-    isPaused = false;
+  resume() {
+    this._isPaused = false;
   }
 
-  this.reset = function () {
-    init();
+  reset() {
+    this._init();
     this.pause();
-    if (timerInterval != "undefined") {
-      clearInterval(timerInterval);
+    if (this._timerInterval != "undefined") {
+      clearInterval(this._timerInterval);
     }
-    writeInTimer(minutes, seconds);
+    this._writeInTimer(this._minutes, this._seconds);
   }
 
-  this.isRunning = function () {
-    return (isPaused != undefined) ? !isPaused : false;
+  get running () {
+    return (this._isPaused != undefined) ? !this._isPaused : false;
   }
 
-  this.getTime = function () {
-      return formatTime(minutes, seconds);
+  get time () {
+    return this._formatTime(this._minutes, this._seconds);
   }
 
-  var writeInTimer = function (minutes, seconds) {
-    $(el).empty();
-    $(el).append(formatTime(minutes, seconds));
+  _writeInTimer(minutes, seconds) {
+    $(this._element).empty();
+    $(this._element).append(this._formatTime(minutes, seconds));
   }
 
-  var padTime = function (number) {
-    return (number + "").padStart(2,0);
+  _padTime(number) {
+    return String(number).padStart(2,0);
   }
 
-  var formatTime = function (minutes, seconds) {
-    return padTime(minutes) + ":" + padTime(seconds)
+  _formatTime(minutes, seconds) {
+    return this._padTime(minutes) + ":" + this._padTime(seconds)
   }
 
 }

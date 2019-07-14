@@ -1,4 +1,3 @@
-// Representation of the game board
 function Board() {
 
   var pieces = [];
@@ -134,7 +133,7 @@ function Board() {
   }
 
   this.move = function (type) {
-    movesInfo = moveTo[type];
+    movesInfo = MOVE_TO[type];
     if (emptyX != movesInfo["limit_x"] && emptyY != movesInfo["limit_y"]) {
       new_x = (movesInfo["change_x"] != undefined) ? emptyX + movesInfo["change_x"] : emptyX;
       new_y = (movesInfo["change_y"] != undefined) ? emptyY + movesInfo["change_y"] : emptyY;
@@ -143,9 +142,9 @@ function Board() {
       pieces[new_x][new_y] = undefined;
 
       if (this.isCorrectPosition(pieces[emptyX][emptyY])) {
-        POSITIVE_SOUND.play();
+        SOUNDS["correctPiece"].play();
       } else {
-        MOVE_SOUND.play();
+        SOUNDS["move"].play();
       }
 
       emptyX = new_x;

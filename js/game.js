@@ -1,79 +1,73 @@
-function Game() {
+class Game {
 
-  var board = new Board();
-  var timer = new Timer("#timer");
-  var self = this;
-  var showingWinScreen = false;
+  constructor() {
+    this.board = new Board();
+    this.timer = new Timer("#timer");
+    this.self = this;
+    this.showingWinScreen = false;
+  }
 
-  this.play = function () {
-    this.congratulate();
+  play() {
     this.initEvents();
-    board.init();
-    timer.reset();
-    this.renderBoard();
+    this.board.init();
+    this.timer.reset();
+    this.render();
   }
 
-  this.restart = function () {
+  restart() {
     RESTART_SOUND.play();
-    board.init();
-    timer.reset();
-    setTimeout(function(){ self.renderBoard(); }, 300);
+    this.board.init();
+    this.timer.reset();
+    this.render();
   }
 
-  this.initEvents = function() {
-
+  initEvents() {
     // Handle click in restart button
-    $("#restart-btn").click(function(){
-      self.restart();
+    $("#restart-btn").click(() => {
+      this.restart();
     });
 
     // handle click in toggle sound button
     $("#music-off, #music-on").click(function(){
-      BACKGROUND_SOUND.toggle();
+      SOUNDS["background"].toggle();
       $("#music-off, #music-on").toggle();
     });
 
     // Handle the arrow keys
-    document.onkeydown = function(e) {
-      keyCode = e.keyCode;
+    document.onkeydown = (e) => {
+      var keyCode = e.keyCode;
       if (keyCode in KEYS_MOVES) {
-        if (!timer.isRunning()) timer.start();
-        board.move(KEYS_MOVES[keyCode]);
-        self.renderBoard();
+        if (!this.timer.running) this.timer.start();
+        this.board.move(KEYS_MOVES[keyCode]);
+        this.render();
       }
     };
 
     // Handle hammer events
     var hammertime = new Hammer(document.body);
     hammertime.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
-    hammertime.on("swipeleft swiperight swipeup swipedown", function(ev) {
-      typeOfEvent = ev.type;
+    hammertime.on("swipeleft swiperight swipeup swipedown", (ev) => {
+      var typeOfEvent = ev.type;
       if (typeOfEvent in EVENTS_MOVES) {
-        if (!timer.isRunning()) timer.start();
-        board.move(EVENTS_MOVES[typeOfEvent]);
-        self.renderBoard();
+        if (!this.timer.running) this.timer.start();
+        this.board.move(EVENTS_MOVES[typeOfEvent]);
+        this.render();
       }
     });
   }
 
-  this.renderBoard = function() {
+  render() {
+    if (this.board.isSolved()) this.congratulate();
 
-    if (board.isSolved()) {
-      this.congratulate();
-    }
-
-    // Clean the old table
     $("table").empty();
-
-    boardPieces = board.getPieces();
-    correctPieces = 0;
-
-    // Generate the new table
+    var boardPieces = this.board.getPieces();
+    var correctPieces = 0;
     for (var i=0; i < BOARD_LENGTH; i++) {
       $("table").append("<tr></tr>");
       for (var j=0; j< BOARD_LENGTH; j++) {
         if (boardPieces[i][j] != undefined) {
-          if (board.isCorrectPosition(boardPieces[i][j])) {
+          if (this.board.isCorrectPosition(
+            boardPieces[i][j])) {
             $("table tr:last").append("<td class='correct-cell'>" + boardPieces[i][j] + "</td>");
             correctPieces++;
           } else {
@@ -86,33 +80,28 @@ function Game() {
     }
 
     // Set statistics about the game
-    $("#number-of-moves").text("MOVES: " + board.getMoves());
-
-    percentageOfCorrectMoves = Math.floor((correctPieces/(BOARD_LENGTH*BOARD_LENGTH - 1))*100)
+    $("#number-of-moves").text("MOVES: " + this.board.getMoves());
+    var percentageOfCorrectMoves = Math.floor((correctPieces/(BOARD_LENGTH*BOARD_LENGTH - 1))*100)
     $("#progress-bar").css("backgroundPosition", percentageOfCorrectMoves + "%");
     $("#progress-bar p").text(percentageOfCorrectMoves + "%");
 
-    if (!showingWinScreen) {
-      $("#game-board").show();
-    }
+    if (!this.showingWinScreen) $("#game-board").show();
   }
 
-  this.congratulate = function() {
-    timer.reset();
-    WIN_SOUND.play();
-    CONGRATULATIONS_SOUND.play();
+  congratulate() {
+    this.timer.reset();
+    SOUNDS["winOne"].play();
+    SOUNDS["winTwo"].play();
     $("#game-board").hide();
     $("#congratulations-container").show();
-    $("#stats-moves").text("Number of moves: " + board.getNumberOfMoves());
-    $("#stats-timer").text("Time: " + timer.getTime());
-    showingWinScreen = true;
+    $("#stats-moves").text("Number of moves: " + this.board.getNumberOfMoves());
+    $("#stats-timer").text("Time: " + this.timer.time);
+    this.showingWinScreen = true;
     setTimeout (function () {
       $("#game-board").show();
       $("#congratulations-container").hide();
-      showingWinScreen = false;
+      this.showingWinScreen = false;
     }, 2000);
-    board.init();
+    this.board.init();
   }
-
-
 }
