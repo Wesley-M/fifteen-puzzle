@@ -1,4 +1,5 @@
 class Sound {
+
   constructor(filename, volume, loop=false) {
     this._audioElement = document.createElement("audio");
     this._configAudioElement(filename, volume, loop);

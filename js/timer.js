@@ -1,5 +1,5 @@
 class Timer {
-  
+
   constructor(el) {
     this._minutes = 0;
     this._seconds = 0;

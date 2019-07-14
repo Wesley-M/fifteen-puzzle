@@ -6,11 +6,12 @@ const SOUNDS = {
   "move"         : new Sound("snd/neutral.wav", 0.5),
   "correctPiece" : new Sound("snd/positive.wav", 0.2),
   "winOne"       : new Sound("snd/you_win.ogg", 1),
-  "winTwo"       : new Sound("snd/winning.wav", 1)
+  "winTwo"       : new Sound("snd/winning.wav", 1),
+  "restart"      : new Sound("snd/collect.ogg", 1)
 }
 
 // Keys for moves
-const KEYS_MOVES = {
+const KEYS_TO_DIRECTIONS = {
   37 : "left",
   38 : "up",
   39 : "right",
@@ -18,7 +19,7 @@ const KEYS_MOVES = {
 };
 
 // Map events of hammer.js to action in the game
-const EVENTS_MOVES = {
+const EVENTS_TO_DIRECTIONS = {
   "swipeleft"  : "left",
   "swiperight" : "right",
   "swipeup"    : "up",

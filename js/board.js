@@ -98,7 +98,6 @@ class Board {
     // Populate board
     for(let i = 0; i < BOARD_LENGTH; i++) {
       for (let j = 0; j < BOARD_LENGTH; j++) {
-        console.log(this.pieces[i][j]);
         this.pieces[i][j] = shuffledPieces[BOARD_LENGTH * i + j];
       }
     }

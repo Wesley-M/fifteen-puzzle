@@ -15,7 +15,7 @@ class Game {
   }
 
   restart() {
-    RESTART_SOUND.play();
+    SOUNDS["restart"].play();
     this.board.init();
     this.timer.reset();
     this.render();
@@ -36,9 +36,8 @@ class Game {
     // Handle the arrow keys
     document.onkeydown = (e) => {
       var keyCode = e.keyCode;
-      if (keyCode in KEYS_MOVES) {
-        if (!this.timer.running) this.timer.start();
-        this.board.movePiece(KEYS_MOVES[keyCode]);
+      if (keyCode in KEYS_TO_DIRECTIONS) {
+        this._move(KEYS_TO_DIRECTIONS[keyCode]);
         this.render();
       }
     };
@@ -48,12 +47,20 @@ class Game {
     hammertime.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
     hammertime.on("swipeleft swiperight swipeup swipedown", (ev) => {
       var typeOfEvent = ev.type;
-      if (typeOfEvent in EVENTS_MOVES) {
-        if (!this.timer.running) this.timer.start();
-        this.board.movePiece(EVENTS_MOVES[typeOfEvent]);
+      if (typeOfEvent in EVENTS_TO_DIRECTIONS) {
+        this._move(EVENTS_TO_DIRECTIONS[typeOfEvent]);
         this.render();
       }
     });
+  }
+
+  _move(direction) {
+    if (!this.timer.running) this.timer.start();
+    if(this.board.movePiece(direction)) {
+      SOUNDS["correctPiece"].play();
+    } else {
+      SOUNDS["move"].play();
+    }
   }
 
   render() {
@@ -80,7 +87,7 @@ class Game {
     }
 
     // Set statistics about the game
-    // $("#number-of-moves").text("MOVES: " + this.board.getMoves());
+    $("#number-of-moves").text("MOVES: " + this.board.moves);
     var percentageOfCorrectMoves = Math.floor((correctPieces/(BOARD_LENGTH*BOARD_LENGTH - 1))*100)
     $("#progress-bar").css("backgroundPosition", percentageOfCorrectMoves + "%");
     $("#progress-bar p").text(percentageOfCorrectMoves + "%");
@@ -89,19 +96,25 @@ class Game {
   }
 
   congratulate() {
-    this.timer.reset();
     SOUNDS["winOne"].play();
     SOUNDS["winTwo"].play();
+
     $("#game-board").hide();
     $("#congratulations-container").show();
-    $("#stats-moves").text("Number of moves: " + this.board.getNumberOfMoves());
+
+    $("#stats-moves").text("Moves: " + this.board.moves);
     $("#stats-timer").text("Time: " + this.timer.time);
+
     this.showingWinScreen = true;
-    setTimeout (function () {
+
+    $("#congratulations-container").on("click", () => {
       $("#game-board").show();
       $("#congratulations-container").hide();
       this.showingWinScreen = false;
-    }, 2000);
+    });
+
+    this.timer.reset();
     this.board.init();
   }
+
 }
