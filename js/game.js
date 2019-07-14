@@ -38,7 +38,7 @@ class Game {
       var keyCode = e.keyCode;
       if (keyCode in KEYS_MOVES) {
         if (!this.timer.running) this.timer.start();
-        this.board.move(KEYS_MOVES[keyCode]);
+        this.board.movePiece(KEYS_MOVES[keyCode]);
         this.render();
       }
     };
@@ -50,7 +50,7 @@ class Game {
       var typeOfEvent = ev.type;
       if (typeOfEvent in EVENTS_MOVES) {
         if (!this.timer.running) this.timer.start();
-        this.board.move(EVENTS_MOVES[typeOfEvent]);
+        this.board.movePiece(EVENTS_MOVES[typeOfEvent]);
         this.render();
       }
     });
@@ -60,11 +60,11 @@ class Game {
     if (this.board.isSolved()) this.congratulate();
 
     $("table").empty();
-    var boardPieces = this.board.getPieces();
+    var boardPieces = this.board.pieces;
     var correctPieces = 0;
-    for (var i=0; i < BOARD_LENGTH; i++) {
+    for (var i = 0; i < BOARD_LENGTH; i++) {
       $("table").append("<tr></tr>");
-      for (var j=0; j< BOARD_LENGTH; j++) {
+      for (var j = 0; j< BOARD_LENGTH; j++) {
         if (boardPieces[i][j] != undefined) {
           if (this.board.isCorrectPosition(
             boardPieces[i][j])) {
@@ -80,7 +80,7 @@ class Game {
     }
 
     // Set statistics about the game
-    $("#number-of-moves").text("MOVES: " + this.board.getMoves());
+    // $("#number-of-moves").text("MOVES: " + this.board.getMoves());
     var percentageOfCorrectMoves = Math.floor((correctPieces/(BOARD_LENGTH*BOARD_LENGTH - 1))*100)
     $("#progress-bar").css("backgroundPosition", percentageOfCorrectMoves + "%");
     $("#progress-bar p").text(percentageOfCorrectMoves + "%");
