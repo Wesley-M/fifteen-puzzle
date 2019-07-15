@@ -107,7 +107,7 @@ class Game {
 
     this.showingWinScreen = true;
 
-    $("#congratulations-container").on("click", () => {
+    $("#trophy-img").on("click", () => {
       $("#game-board").show();
       $("#congratulations-container").hide();
       this.showingWinScreen = false;
