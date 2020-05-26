@@ -17,24 +17,44 @@ html, body {
 }
 
 body {
-  background: url("../img/background.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-color: rgb(210, 214, 215);
-  background-size: cover;
+  background-color: rgb(243, 118, 1);
+  overflow-y: hidden;
+}
+
+header {
+  width: 100%;
+  height: 15vh;
 
   display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+main {
+  width: 100%;
+  height: 75vh;
+
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
 
-  overflow-y: hidden;
+header p {
+  font-size: 2.5em;
+  color: white;
 }
 
 /* Design of the board and its cells */
 
 table {
-    margin: 30px;
-    margin-top: -40px;
+  width: 80%;
+  margin-top: -40px;
+
+  padding: 2px;
+
+  border: 1px solid rgb(134, 123, 123);
+  border-radius: 5px;
 }
 
 td {
@@ -42,16 +62,25 @@ td {
   color: rgba(0, 0, 0, 0.85);
 
   border-radius: 4px;
-  width: 1em;
-  height: 1em;
+  width: 17%;
+  height: 17%;
   margin: 8px;
+
+  padding: 2px;
 
   display: inline-block;
   letter-spacing: 1px;
-  box-shadow: -4px 3px .5px 2px rgb(205, 190, 154);
-  font-size: 3em;
+  box-shadow: 0px 0px 3px 1px rgb(160, 156, 156);
+  font-size: 2.5em;
   text-align: center;
   text-decoration: none;
+
+  transition: all 200ms ease-in;
+}
+
+td:hover {
+  box-shadow: 0px 0px 4px 1px rgb(105, 102, 102);
+  cursor: pointer;
 }
 
 /* Design of the game's stats */
@@ -61,21 +90,22 @@ td {
   height: 20px;
   position: relative;
   top: -65px;
-  margin-left: 38px;
   background: linear-gradient(90deg, #eee 50%, transparent 50%);
-  background-color: rgb(228, 174, 122);
+  background-color: rgb(218, 198, 25);
   background-size: 200%;
   background-position: 80%;
   border-radius: 5px;
   transform: scale(-1);
   transition: 0.3s;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #progress-bar p{
   transform: scale(-1);
   color: black;
-  text-align: center;
-  padding: 2px;
 }
 
 #progress-bar:before {
@@ -109,28 +139,39 @@ td {
 
 /* Design of the board and its components */
 
+#game-board {
+  width: 25%;
+  height: 350px;
+  min-width: 330px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 0px 5px 1px rgb(39, 37, 37);
+  z-index: 0;
+}
+
 .board-container {
-  background-color: rgba(136, 49, 43, 0.95);
+  background-color: rgb(245, 227, 184);
   padding: 5px;
   padding-top: 120px;
   padding-bottom: 20px;
-  border-radius: 4px;
-  box-shadow: -3px 3px 0px 4px rgba(0, 0, 0, 0.7);
-  width: 330px;
-  height: 370px;
+  border-radius: 6px;
   display: none;
   z-index: 1;
 }
 
 #header-board-container {
-  background-color: rgba(227, 174, 120, 0.82);
+  padding: 5px;
+  border-radius: 2px;
+
+  border: 1px solid rgb(134, 123, 123);
+  
   color: rgb(49, 50, 49);
   font-size: 1.3em;
   position: relative;
   top: -90px;
   width: 230px;
   padding: 10px;
-  margin-left: 40px;
   display: flex;
 }
 
@@ -140,26 +181,28 @@ td {
 }
 
 .options {
-  display: flex;
-  background-color: rgba(245, 227, 184, 0.9);
+  margin-top: 5%;
+  width: 50%;
   padding: 5px;
-  margin-left: 35px;
-  margin-right: 50px;
-  border-radius: 8px;
+  display: flex;
+  justify-content: space-evenly;
+  background-color: rgba(245, 227, 184, 0.9);
 }
 
-#restart-btn, #music-on, #music-off {
-  width: 35px;
-  height: 35px;
-  margin: 0 auto;
+#restart-btn, #music-on {
+  width: 30px;
+  height: 30px;
+
+  transition: all 200ms;
+}
+
+#restart-btn:hover, #music-on:hover {
+  width: 36px;
+  height: 36px;
 }
 
 #restart-btn:hover, #music-on:hover, #music-off:hover{
   cursor: pointer;
-}
-
-#game-board {
-  z-index: 0;
 }
 
 #stats-moves, #stats-timer {

@@ -10,32 +10,35 @@
     <title>15 Puzzle</title>
   </head>
   <body>
-
-    <div id="game-board" class="board-container">
-      <div id='header-board-container'>
-        <span id='number-of-moves'>MOVES: 0</span>
-        <span id='timer'></span>
+    <header>
+      <p>15 Puzzle</p>
+    </header>
+    <main>
+      <div id="game-board" class="board-container">
+        <div id='header-board-container'>
+          <span id='number-of-moves'>MOVES: 0</span>
+          <span id='timer'></span>
+        </div>
+        <div id='progress-bar'>
+          <p></p>
+        </div>
+        <table>
+        </table>
+        <a class='options'>
+          <img id='restart-btn' title='restart' src='img/restart.png'/>
+          <img id='music-on' title='background sound on' src='img/music_on.png'/>
+        </a>
       </div>
-      <div id='progress-bar'>
-        <p></p>
+  
+      <div id="congratulations-container" class="board-container">
+        <span class="statistics">
+          <span id="stats-moves"></span>
+          <span id="stats-timer"></span>
+        </span>
+        <img id="trophy-img" src="img/trophy-gold.gif" alt="Trophy">
+        <p>Click on the trophy to continue!</p>
       </div>
-      <table>
-      </table>
-      <a class='options'>
-        <img id='restart-btn' title='restart' src='img/restart.png'/>
-        <img id='music-off' title='background sound off' src='img/music_off.png'/>
-        <img id='music-on' title='background sound on' src='img/music_on.png' style="display: none"/>
-      </a>
-    </div>
-
-    <div id="congratulations-container" class="board-container">
-      <span class="statistics">
-        <span id="stats-moves"></span>
-        <span id="stats-timer"></span>
-      </span>
-      <img id="trophy-img" src="img/trophy-gold.gif" alt="Trophy">
-      <p>Click on the trophy to continue!</p>
-    </div>
+    </main>
 
     <script src="lib/jquery.min.js"></script>
     <script src="lib/hammer.min.js" charset="utf-8"></script>

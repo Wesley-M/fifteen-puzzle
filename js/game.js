@@ -30,7 +30,6 @@ class Game {
     // handle click in toggle sound button
     $("#music-off, #music-on").click(function(){
       SOUNDS["background"].toggle();
-      $("#music-off, #music-on").toggle();
     });
 
     // Handle the arrow keys

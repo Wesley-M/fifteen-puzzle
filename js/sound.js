@@ -17,6 +17,8 @@ class Sound {
   }
 
   play() {
+    this.resetTime();
+    this.stop();
     this._audioElement.play();
     this.running = true;
   }
@@ -24,6 +26,10 @@ class Sound {
   stop() {
     this._audioElement.pause();
     this.running = false;
+  }
+
+  resetTime() {
+    this._audioElement.currentTime = 0;
   }
 
   loop(type) {
