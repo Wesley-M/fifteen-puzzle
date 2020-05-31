@@ -2,12 +2,12 @@ const BOARD_LENGTH = 4;
 
 // Load and set sound variables
 const SOUNDS = {
-  "background"   : new Sound("snd/mystery.ogg", 0.6, true),
-  "move"         : new Sound("snd/neutral.wav", 0.2),
-  "correctPiece" : new Sound("snd/positive.wav", 0.1),
-  "winOne"       : new Sound("snd/you_win.ogg", 0.6),
-  "winTwo"       : new Sound("snd/winning.wav", 0.6),
-  "restart"      : new Sound("snd/collect.ogg", 0.6)
+  "background"   : new Sound("../res/snd/mystery.ogg", 0.6, true),
+  "move"         : new Sound("../res/snd/neutral.wav", 0.2),
+  "correctPiece" : new Sound("../res/snd/positive.wav", 0.1),
+  "winOne"       : new Sound("../res/snd/you_win.ogg", 0.6),
+  "winTwo"       : new Sound("../res/snd/winning.wav", 0.6),
+  "restart"      : new Sound("../res/snd/collect.ogg", 0.6)
 }
 
 // Keys for moves

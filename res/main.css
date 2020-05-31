@@ -1,11 +1,11 @@
 @font-face {
   font-family: iomanoid;
-  src: url(../font/iomanoid.ttf);
+  src: url(./font/iomanoid.ttf);
 }
 
 @font-face {
   font-family: VT323;
-  src: url(../font/VT323.ttf);
+  src: url(./font/VT323.ttf);
 }
 
 * {
@@ -13,7 +13,9 @@
 }
 
 html, body {
-  height: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -159,6 +161,7 @@ td:hover {
   display: none;
   z-index: 1;
 }
+
 
 #header-board-container {
   padding: 5px;

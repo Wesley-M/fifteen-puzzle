@@ -4,15 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
 
-    <link rel="stylesheet" href="css/master.css">
+    <link rel="stylesheet" href="./res/main.css">
     <link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
 
     <title>15 Puzzle</title>
   </head>
   <body>
+    
+    <score-widget></score-widget>
+    
     <header>
       <p>15 Puzzle</p>
     </header>
+    
     <main>
       <div id="game-board" class="board-container">
         <div id='header-board-container'>
@@ -25,8 +29,8 @@
         <table>
         </table>
         <a class='options'>
-          <img id='restart-btn' title='restart' src='img/restart.png'/>
-          <img id='music-on' title='background sound on' src='img/music_on.png'/>
+          <img id='restart-btn' title='restart' src='./res/img/restart.png'/>
+          <img id='music-on' title='background sound on' src='./res/img/music_on.png'/>
         </a>
       </div>
   
@@ -35,18 +39,20 @@
           <span id="stats-moves"></span>
           <span id="stats-timer"></span>
         </span>
-        <img id="trophy-img" src="img/trophy-gold.gif" alt="Trophy">
+        <img id="trophy-img" src="./res/img/trophy-gold.gif" alt="Trophy">
         <p>Click on the trophy to continue!</p>
       </div>
     </main>
 
     <script src="lib/jquery.min.js"></script>
     <script src="lib/hammer.min.js" charset="utf-8"></script>
-    <script src="js/sound.js" charset="utf-8"></script>
-    <script src="js/timer.js" charset="utf-8"></script>
-    <script src="js/settings.js" charset="utf-8"></script>
-    <script src="js/board.js" charset="utf-8"></script>
-    <script src="js/game.js" charset="utf-8"></script>
-    <script src="js/app.js" charset="utf-8"></script>
+    <script src="./res/js/sound.js" charset="utf-8"></script>
+    <script src="./res/js/timer.js" charset="utf-8"></script>
+    <script src="./res/js/settings.js" charset="utf-8"></script>
+    <script src="./res/js/board.js" charset="utf-8"></script>
+    <script src="./res/js/game.js" charset="utf-8"></script>
+    <script src="./res/js/app.js" charset="utf-8"></script>
+
+    <script type="module" src="./res/components/ScoreWidget.js"></script>
   </body>
 </html>
