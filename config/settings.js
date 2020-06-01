@@ -1,3 +1,5 @@
+import Sound from '../src/components/Sound.js'
+
 const BOARD_LENGTH = 4;
 
 // Load and set sound variables
@@ -52,4 +54,12 @@ const MOVE_TO = {
     "limit_x": undefined,
     "limit_y": 0
   }
+};
+
+export { 
+  BOARD_LENGTH, 
+  SOUNDS, 
+  KEYS_TO_DIRECTIONS, 
+  EVENTS_TO_DIRECTIONS, 
+  MOVE_TO
 };

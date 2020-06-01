@@ -1,4 +1,4 @@
-class Sound {
+export default class Sound {
 
   constructor(filename, volume, loop=false) {
     this._audioElement = document.createElement("audio");

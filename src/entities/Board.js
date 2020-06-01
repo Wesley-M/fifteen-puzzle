@@ -1,3 +1,5 @@
+import { BOARD_LENGTH, MOVE_TO } from '../../config/settings.js'
+
 class Pair {
   constructor(x, y) {
     this.x = x;
@@ -5,7 +7,7 @@ class Pair {
   }
 }
 
-class Board {
+export default class Board {
   constructor() {
     this.pieces = this.emptyBoard();
     this.moves = 0;

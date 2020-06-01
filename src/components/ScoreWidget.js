@@ -1,33 +1,71 @@
-class ScoreWidget extends HTMLElement {
+export default class ScoreWidget extends HTMLElement {
 
     constructor() {
         super();
+
+        this.updateInterval = 1000;
+        this.fetchScoresInterval = undefined;
     }
     
-    connectedCallback() {
-        this.render();
-        this.addEventListeners();
+    get gameId() {
+        return this.getAttribute('gameId');
     }
 
-    addEventListeners() {
-        
+    get score() {
+        return this.getAttribute('score');
+    }
+
+    set score(newScore) {
+        return this.setAttribute('score', newScore);
+    }
+
+    connectedCallback() {
+        this.fetchScores().then(scoresJSON => { 
+            this.render(scoresJSON);
+            this.updateState(); 
+        });
+    }
+
+    updateState() {
+        this.fetchScoresInterval = setInterval(() => {
+            this.fetchScores().then(scoresJSON => this.addScoreRows(scoresJSON));
+            this.updateScore();
+        }, this.updateInterval);
+    }
+
+    updateScore() {
+        this.shadowRoot.querySelector("#score-value").innerText = this.score;
     }
 
     fetchScores() {
-        
+        return fetch("https://wgames-server.herokuapp.com/scores/" + this.gameId)
+            .then((response) => response.json()); 
     }
 
-    populateDOM(campaigns) {
-        
+    addScoreRows(scores) { 
+        this.shadowRoot.querySelector("tbody").innerHTML = "";
+
+        scores.forEach((score, index) => {
+            let scoreRow = `
+                <tr class="score-record">
+                    <td class="record-rank">#${index + 1}</td>
+                    <td class="record-username">${score.name}</td>
+                    <td class="record-value">${score.value}</td>
+                </tr>
+            `;
+
+            this.shadowRoot.querySelector("tbody").innerHTML += scoreRow;
+        })
+
     }
 
-    render() {
+    render(scores) {
         const shadowRoot = this.attachShadow({mode: 'open'});
         shadowRoot.innerHTML = `
             <style>
 
                 ::-webkit-scrollbar {
-                    width: 12px;
+                    width: 8px;
                 }
                 
                 ::-webkit-scrollbar-track {
@@ -91,7 +129,7 @@ class ScoreWidget extends HTMLElement {
                     display: block;
                 }
 
-                #score-list table tbody tr { 
+                #score-list table tr { 
                     display: table;
                     width: 100%;
                     table-layout: fixed;
@@ -116,58 +154,25 @@ class ScoreWidget extends HTMLElement {
 
                 <div id="score-list">
                     <table>
-                        <theader>
+                        <thead>
                             <tr>
                                 <th>Rank</th>
                                 <th>Name</th>
                                 <th>Score</th>
                             </tr>
-                        </theader>
+                        </thead>
                         <tbody>
-                            <tr class="score-record">
-                                <td class="record-rank">#1</td>
-                                <td class="record-username">Unknown</td>
-                                <td class="record-value">0000</td>
-                            </tr>
-                            <tr class="score-record">
-                                <td class="record-rank">#2</td>
-                                <td class="record-username">Unknown</td>
-                                <td class="record-value">0000</td>
-                            </tr>
-                            <tr class="score-record">
-                                <td class="record-rank">#3</td>
-                                <td class="record-username">Unknown</td>
-                                <td class="record-value">0000</td>
-                            </tr>
-                            <tr class="score-record">
-                                <td class="record-rank">#4</td>
-                                <td class="record-username">Unknown</td>
-                                <td class="record-value">0000</td>
-                            </tr>
-                            <tr class="score-record">
-                                <td class="record-rank">#4</td>
-                                <td class="record-username">Unknown</td>
-                                <td class="record-value">0000</td>
-                            </tr>
-                            <tr class="score-record">
-                                <td class="record-rank">#4</td>
-                                <td class="record-username">Unknown</td>
-                                <td class="record-value">0000</td>
-                            </tr>
-                            <tr class="score-record">
-                                <td class="record-rank">#4</td>
-                                <td class="record-username">Unknown</td>
-                                <td class="record-value">0000</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
 
                 <footer>
-                    <p>0000</p>
+                    <p id="score-value">0000</p>
                 </footer>
             </div>
         `;
+
+        this.addScoreRows(scores);
     }
 }
 

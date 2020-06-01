@@ -11,10 +11,10 @@
   </head>
   <body>
     
-    <score-widget></score-widget>
-    
     <header>
       <p>15 Puzzle</p>
+
+      <score-widget gameId="fifteen-puzzle"></score-widget>
     </header>
     
     <main>
@@ -44,15 +44,18 @@
       </div>
     </main>
 
-    <script src="lib/jquery.min.js"></script>
-    <script src="lib/hammer.min.js" charset="utf-8"></script>
-    <script src="./res/js/sound.js" charset="utf-8"></script>
-    <script src="./res/js/timer.js" charset="utf-8"></script>
-    <script src="./res/js/settings.js" charset="utf-8"></script>
-    <script src="./res/js/board.js" charset="utf-8"></script>
-    <script src="./res/js/game.js" charset="utf-8"></script>
-    <script src="./res/js/app.js" charset="utf-8"></script>
+    <script src="vendor/hammer.min.js"></script>
 
-    <script type="module" src="./res/components/ScoreWidget.js"></script>
+    <script type="module" src="./src/components/Sound.js"></script>
+    <script type="module" src="./src/components/Timer.js"></script>
+    <script type="module" src="./src/components/ScoreWidget.js"></script>
+
+    <script type="module" src="./config/settings.js"></script>
+
+    <script type="module" src="./src/entities/Board.js"></script>
+    <script type="module" src="./src/entities/Game.js"></script>
+
+    <script type="module" src="./src/index.js"></script>
+
   </body>
 </html>

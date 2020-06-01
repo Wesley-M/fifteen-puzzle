@@ -1,4 +1,4 @@
-class Timer {
+export default class Timer {
 
   constructor(el) {
     this._minutes = 0;
@@ -58,8 +58,8 @@ class Timer {
   }
 
   _writeInTimer(minutes, seconds) {
-    $(this._element).empty();
-    $(this._element).append(this._formatTime(minutes, seconds));
+    document.querySelector(this._element).innerHTML = "";
+    document.querySelector(this._element).innerHTML += this._formatTime(minutes, seconds);
   }
 
   _padTime(number) {
