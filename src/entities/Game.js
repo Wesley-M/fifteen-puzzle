@@ -1,7 +1,8 @@
 import Board from './Board.js'
 import Timer from '../components/Timer.js'
+import Sound from '../components/Sound.js'
 
-import { BOARD_LENGTH, SOUNDS, KEYS_TO_DIRECTIONS, EVENTS_TO_DIRECTIONS } from '../../config/settings.js'
+import { BOARD_LENGTH, SOUND_DIR, KEYS_TO_DIRECTIONS, EVENTS_TO_DIRECTIONS } from '../../config/settings.js'
 
 export default class Game {
 
@@ -13,20 +14,13 @@ export default class Game {
     this.correctPieces = 0;
     this.scorePenalty = this.score * 0.005;
     this.showingWinScreen = false;
+
+    this.init();
   }
 
-  play() {
+  init() {
     this.initEvents();
-    this.board.init();
-    this.timer.reset();
-    this.render();
-  }
-
-  restart() {
-    SOUNDS["restart"].play();
-    this.board.init();
-    this.timer.reset();
-    this.render();
+    this.initSounds();
   }
 
   initEvents() {
@@ -36,17 +30,29 @@ export default class Game {
     this.touchEvents();
   }
 
+  initSounds() {
+    this.sounds = {
+      "background":   new Sound(SOUND_DIR + "background.ogg", 0.6, true),
+      "move":         new Sound(SOUND_DIR + "move.wav", 0.2),
+      "correctPiece": new Sound(SOUND_DIR + "correctPiece.wav", 0.1),
+      "restart":      new Sound(SOUND_DIR + "restart.ogg", 0.6),
+      "winOne":       new Sound(SOUND_DIR + "winOne.ogg", 0.6),
+      "winTwo":       new Sound(SOUND_DIR + "winTwo.wav", 0.6),
+    };
+  }
+
   restartEvent() {
     // Handle click in restart button
     document.querySelector("#restart-btn").addEventListener('click', () => {
-      this.restart();
+      this.sounds["restart"].play();
+      this.play();
     });
   }
 
   musicButtonEvents() {
     // handle click in toggle sound button
     document.querySelector("#music-off, #music-on").addEventListener('click', () => {
-      SOUNDS["background"].toggle();
+      this.sounds["background"].toggle();
     });
   }
 
@@ -74,12 +80,18 @@ export default class Game {
     });
   }
 
+  play() {
+    this.board.init();
+    this.timer.reset();
+    this.render();
+  }
+
   _move(direction) {
     if (!this.timer.running) this.timer.start();
     if(this.board.movePiece(direction)) {
-      SOUNDS["correctPiece"].play();
+      this.sounds["correctPiece"].play();
     } else {
-      SOUNDS["move"].play();
+      this.sounds["move"].play();
       this.score -= this.scorePenalty;
     }
   }
@@ -142,8 +154,8 @@ export default class Game {
 
 
   congratulate() {
-    SOUNDS["winOne"].play();
-    SOUNDS["winTwo"].play();
+    this.sounds["winOne"].play();
+    this.sounds["winTwo"].play();
 
     document.querySelector("#game-board").display = "none";
     document.querySelector("#congratulations-container").display = "block";

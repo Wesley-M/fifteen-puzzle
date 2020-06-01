@@ -1,16 +1,8 @@
-import Sound from '../src/components/Sound.js'
-
 const BOARD_LENGTH = 4;
 
-// Load and set sound variables
-const SOUNDS = {
-  "background"   : new Sound("../res/snd/mystery.ogg", 0.6, true),
-  "move"         : new Sound("../res/snd/neutral.wav", 0.2),
-  "correctPiece" : new Sound("../res/snd/positive.wav", 0.1),
-  "winOne"       : new Sound("../res/snd/you_win.ogg", 0.6),
-  "winTwo"       : new Sound("../res/snd/winning.wav", 0.6),
-  "restart"      : new Sound("../res/snd/collect.ogg", 0.6)
-}
+const SOUND_DIR = location.href + "res/snd/";
+
+console.log(location.href );
 
 // Keys for moves
 const KEYS_TO_DIRECTIONS = {
@@ -58,7 +50,7 @@ const MOVE_TO = {
 
 export { 
   BOARD_LENGTH, 
-  SOUNDS, 
+  SOUND_DIR, 
   KEYS_TO_DIRECTIONS, 
   EVENTS_TO_DIRECTIONS, 
   MOVE_TO
