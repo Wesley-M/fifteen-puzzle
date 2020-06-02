@@ -232,3 +232,8 @@ td:hover {
 .correct-cell {
   color: rgb(235, 200, 16);
 }
+
+.winner-name {
+  font-size: 1.5em;
+  text-align: center;
+}

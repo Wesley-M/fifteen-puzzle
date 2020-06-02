@@ -15,7 +15,6 @@ export default class Game {
     this.scoreTimePenaulty = this.scoreMovePenalty / 3;
     this.scoreWidget = document.querySelector("score-widget");
     this.correctPieces = 0;
-    this.showingWinScreen = false;
 
     this.init();
   }
@@ -45,6 +44,72 @@ export default class Game {
     };
   }
 
+  initContinuousScoreDecrease() {
+    this.continuousDecreaseId = setInterval(() => {
+      this.updateScore(true, this.scoreTimePenaulty);
+    }, 1000);
+  }
+
+  updateScore(decrease, penalty) {
+    let newScore = parseInt(this.score - penalty);
+
+    if (decrease && newScore >= 0) this.score = newScore;
+    else if (newScore < 0) this.score = 0;
+    
+    this.scoreWidget.setAttribute('score', this.score);
+  }
+
+  play() {
+    this.board.init();
+    this.timer.reset();
+    this.checkWin();
+  }
+
+  move(direction) {
+    if (!this.timer.running) this.timer.start();
+    
+    let move = this.board.movePiece(direction);
+
+    if(move.happened) {
+      if (move.isCorrect) this.sounds["correctPiece"].play();
+      else this.sounds["move"].play();
+    }
+
+    return move.happened;
+  }
+
+  checkWin() {
+    let won = this.board.isSolved();
+    if (won) { 
+      this.congratulate();
+      clearInterval(this.continuousDecreaseId);
+    }
+    return won;
+  }
+
+  congratulate() {
+    this.sounds["winOne"].play();
+    this.sounds["winTwo"].play();
+
+    Swal.fire({
+      title: 'You Win!',
+      text: 'Please enter your name: ',
+      input: 'text',
+      showCancelButton: true,
+      customClass: {
+        input: 'winner-name'
+      },
+      inputValidator: (value) => {
+        if (!value) {
+          return 'You need to write something!'
+        }
+      }
+    })
+
+    this.timer.reset();
+    this.board.init();
+  }
+
   restartEvent() {
     // Handle click in restart button
     document.querySelector("#restart-btn").addEventListener('click', () => {
@@ -65,8 +130,8 @@ export default class Game {
     document.onkeydown = (e) => {
       var keyCode = e.keyCode;
       if (keyCode in KEYS_TO_DIRECTIONS) {
-        this.move(KEYS_TO_DIRECTIONS[keyCode]);
-        if (!this.checkWin()) this.updateScore(true, this.scoreMovePenalty);
+        let moveHappened = this.move(KEYS_TO_DIRECTIONS[keyCode]);
+        if (!this.checkWin() && moveHappened) this.updateScore(true, this.scoreMovePenalty);
       }
     };
   }
@@ -78,71 +143,10 @@ export default class Game {
     hammertime.on("swipeleft swiperight swipeup swipedown", (ev) => {
       var typeOfEvent = ev.type;
       if (typeOfEvent in EVENTS_TO_DIRECTIONS) {
-        this.move(EVENTS_TO_DIRECTIONS[typeOfEvent]);
-        if (!this.checkWin()) this.updateScore(true, this.scoreMovePenalty);
+        let moveHappened = this.move(KEYS_TO_DIRECTIONS[keyCode]);
+        if (!this.checkWin() && moveHappened) this.updateScore(true, this.scoreMovePenalty);
       }
     });
-  }
-
-  updateScore(decrease, penalty) {
-    let newScore = parseInt(this.score - penalty);
-
-    if (decrease && newScore >= 0) this.score = newScore;
-    else if (newScore < 0) this.score = 0;
-    
-    this.scoreWidget.setAttribute('score', this.score);
-  }
-
-  initContinuousScoreDecrease() {
-    this.continuousDecreaseId = setInterval(() => {
-      this.updateScore(true, this.scoreTimePenaulty);
-    }, 1000);
-  }
-
-  play() {
-    this.board.init();
-    this.timer.reset();
-    this.checkWin();
-  }
-
-  move(direction) {
-    if (!this.timer.running) this.timer.start();
-    if(this.board.movePiece(direction)) {
-      this.sounds["correctPiece"].play();
-    } else {
-      this.sounds["move"].play();
-    }
-  }
-
-  checkWin() {
-    let won = this.board.isSolved();
-    if (won) { 
-      this.congratulate();
-      clearInterval(this.continuousDecreaseId);
-    }
-    return won;
-  }
-
-  congratulate() {
-    this.sounds["winOne"].play();
-    this.sounds["winTwo"].play();
-
-    document.querySelector("#game-board").display = "none";
-    document.querySelector("#congratulations-container").display = "block";
-
-    document.querySelector("#stats-moves").innerText = `Moves: ${this.board.moves}`;
-    document.querySelector("#stats-timer").innerText = `Time: ${this.timer.time}`;
-
-    this.showingWinScreen = true;
-
-    document.querySelector("#trophy-img").addEventListener("click", () => {
-      document.querySelector("#game-board").display = "block";
-      document.querySelector("#congratulations-container").display = "none";
-      this.showingWinScreen = false;
-    });
-
-    this.timer.reset();
-    this.board.init();
   }
 
 }

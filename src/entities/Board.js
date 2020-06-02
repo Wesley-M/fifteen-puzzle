@@ -109,9 +109,11 @@ export default class Board {
     let changes = MOVE_TO[direction];
     let newX;
     let newY;
+    let happened = false;
+    let isCorrect = false;
 
     if (!(this.blank.x != changes["limit_x"] && this.blank.y != changes["limit_y"])) {
-      return null;
+      return {happened, isCorrect};
     }
 
     if (changes["change_x"] != undefined) {
@@ -129,13 +131,14 @@ export default class Board {
     this.pieces[this.blank.x][this.blank.y] = this.pieces[newX][newY];
     this.pieces[newX][newY] = undefined;
 
-    let isCorrectMove = this.isCorrectPosition(
-                          this.pieces[this.blank.x][this.blank.y]);
+    isCorrect = this.isCorrectPosition(this.pieces[this.blank.x][this.blank.y]);
 
     this.blank.x = newX;
     this.blank.y = newY;
     this.moves++;
 
-    return isCorrectMove;
+    happened = true;
+
+    return { happened, isCorrect };
   }
 }
