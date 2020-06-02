@@ -2,7 +2,7 @@ import Board from './Board.js'
 import Timer from '../components/Timer.js'
 import Sound from '../components/Sound.js'
 
-import { BOARD_LENGTH, SOUND_DIR, KEYS_TO_DIRECTIONS, EVENTS_TO_DIRECTIONS } from '../../config/settings.js'
+import { SOUND_DIR, KEYS_TO_DIRECTIONS, EVENTS_TO_DIRECTIONS } from '../../config/settings.js'
 
 export default class Game {
 
@@ -62,7 +62,7 @@ export default class Game {
       var keyCode = e.keyCode;
       if (keyCode in KEYS_TO_DIRECTIONS) {
         this._move(KEYS_TO_DIRECTIONS[keyCode]);
-        this.render();
+        this.checkWin();
       }
     };
   }
@@ -75,7 +75,7 @@ export default class Game {
       var typeOfEvent = ev.type;
       if (typeOfEvent in EVENTS_TO_DIRECTIONS) {
         this._move(EVENTS_TO_DIRECTIONS[typeOfEvent]);
-        this.render();
+        this.checkWin();
       }
     });
   }
@@ -83,7 +83,7 @@ export default class Game {
   play() {
     this.board.init();
     this.timer.reset();
-    this.render();
+    this.checkWin();
   }
 
   _move(direction) {
@@ -96,62 +96,11 @@ export default class Game {
     }
   }
 
-  render() {
-    if (this.board.isSolved()) this.congratulate();
-
-    this.renderBoard();
-    this.renderStatistics();
+  checkWin() {
+    let won = this.board.isSolved();
+    if (won) this.congratulate();
+    return won;
   }
-
-  renderBoard() {
-    let board = this.board.pieces;
-    
-    // Selecting the table
-    let table = document.querySelector("table");
-
-    // Cleaning the table
-    table.innerHTML = "";
-
-    // Setting objects structures
-    let tr = "<tr></tr>";
-    let incorrectPiece = "<td>PIECE_VALUE</td>"
-    let hiddenPiece = "<td style='visibility:hidden'></td>";
-    let correctPiece = "<td class='correct-cell'>PIECE_VALUE</td>";
-
-    // Reseting the correct pieces counter
-    this.correctPieces = 0;
-
-    board.forEach(row => {
-      // Rendering the rows
-      table.innerHTML += tr;
-      let lastTR = document.querySelector("table tr:last-child");
-      
-      // Rendering the pieces
-      row.forEach(piece => {
-        if (piece != undefined) {
-            if (this.board.isCorrectPosition(piece)) {
-              lastTR.innerHTML += correctPiece.replace("PIECE_VALUE", piece); 
-              this.correctPieces += 1;
-            } else {
-              lastTR.innerHTML += incorrectPiece.replace("PIECE_VALUE", piece);
-            }
-        } else {
-          lastTR.innerHTML += hiddenPiece;
-        }
-      })
-    });
-  }
-
-  renderStatistics() {
-    let percentageOfCorrectMoves = Math.floor((this.correctPieces/(BOARD_LENGTH*BOARD_LENGTH - 1))*100)
-
-    document.querySelector("#number-of-moves").innerText = `MOVES: ${this.board.moves}`;
-    document.querySelector("#progress-bar").style.backgroundPosition = percentageOfCorrectMoves + "%";
-    document.querySelector("#progress-bar p").innerText = percentageOfCorrectMoves + "%";
-
-    if (!this.showingWinScreen) document.querySelector("#game-board").display = "block";
-  }
-
 
   congratulate() {
     this.sounds["winOne"].play();
