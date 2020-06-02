@@ -3,7 +3,7 @@ export default class ScoreWidget extends HTMLElement {
     constructor() {
         super();
 
-        this.updateInterval = 1000;
+        this.updateInterval = 500;
         this.fetchScoresInterval = undefined;
     }
     

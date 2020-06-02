@@ -11,8 +11,10 @@ export default class Game {
     this.board = new Board();
     this.timer = new Timer("#timer");
     this.score = 9999;
+    this.scoreMovePenalty = this.score * 0.001;
+    this.scoreTimePenaulty = this.scoreMovePenalty / 3;
+    this.scoreWidget = document.querySelector("score-widget");
     this.correctPieces = 0;
-    this.scorePenalty = this.score * 0.005;
     this.showingWinScreen = false;
 
     this.init();
@@ -21,6 +23,8 @@ export default class Game {
   init() {
     this.initEvents();
     this.initSounds();
+    this.updateScore();
+    this.initContinuousScoreDecrease();
   }
 
   initEvents() {
@@ -61,8 +65,8 @@ export default class Game {
     document.onkeydown = (e) => {
       var keyCode = e.keyCode;
       if (keyCode in KEYS_TO_DIRECTIONS) {
-        this._move(KEYS_TO_DIRECTIONS[keyCode]);
-        this.checkWin();
+        this.move(KEYS_TO_DIRECTIONS[keyCode]);
+        if (!this.checkWin()) this.updateScore(true, this.scoreMovePenalty);
       }
     };
   }
@@ -74,10 +78,25 @@ export default class Game {
     hammertime.on("swipeleft swiperight swipeup swipedown", (ev) => {
       var typeOfEvent = ev.type;
       if (typeOfEvent in EVENTS_TO_DIRECTIONS) {
-        this._move(EVENTS_TO_DIRECTIONS[typeOfEvent]);
-        this.checkWin();
+        this.move(EVENTS_TO_DIRECTIONS[typeOfEvent]);
+        if (!this.checkWin()) this.updateScore(true, this.scoreMovePenalty);
       }
     });
+  }
+
+  updateScore(decrease, penalty) {
+    let newScore = parseInt(this.score - penalty);
+
+    if (decrease && newScore >= 0) this.score = newScore;
+    else if (newScore < 0) this.score = 0;
+    
+    this.scoreWidget.setAttribute('score', this.score);
+  }
+
+  initContinuousScoreDecrease() {
+    this.continuousDecreaseId = setInterval(() => {
+      this.updateScore(true, this.scoreTimePenaulty);
+    }, 1000);
   }
 
   play() {
@@ -86,19 +105,21 @@ export default class Game {
     this.checkWin();
   }
 
-  _move(direction) {
+  move(direction) {
     if (!this.timer.running) this.timer.start();
     if(this.board.movePiece(direction)) {
       this.sounds["correctPiece"].play();
     } else {
       this.sounds["move"].play();
-      this.score -= this.scorePenalty;
     }
   }
 
   checkWin() {
     let won = this.board.isSolved();
-    if (won) this.congratulate();
+    if (won) { 
+      this.congratulate();
+      clearInterval(this.continuousDecreaseId);
+    }
     return won;
   }
 
