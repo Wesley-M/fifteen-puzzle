@@ -2,7 +2,12 @@ import Board from './Board.js'
 import Timer from '../components/Timer.js'
 import Sound from '../components/Sound.js'
 
-import { SOUND_DIR, KEYS_TO_DIRECTIONS, EVENTS_TO_DIRECTIONS } from '../../config/settings.js'
+import { 
+  SOUND_DIR, 
+  MAX_SCORE, 
+  KEYS_TO_DIRECTIONS, 
+  EVENTS_TO_DIRECTIONS 
+} from '../../config/settings.js'
 
 export default class Game {
 
@@ -10,7 +15,7 @@ export default class Game {
     this.self = this;
     this.board = new Board();
     this.timer = new Timer("#timer");
-    this.score = 9999;
+    this.score = MAX_SCORE;
     this.scoreMovePenalty = this.score * 0.001;
     this.scoreTimePenaulty = this.scoreMovePenalty / 3;
     this.scoreWidget = document.querySelector("score-widget");
@@ -80,10 +85,7 @@ export default class Game {
 
   checkWin() {
     let won = this.board.isSolved();
-    if (won) { 
-      this.congratulate();
-      clearInterval(this.continuousDecreaseId);
-    }
+    if (won) this.congratulate();
     return won;
   }
 
@@ -91,7 +93,22 @@ export default class Game {
     this.sounds["winOne"].play();
     this.sounds["winTwo"].play();
 
-    Swal.fire({
+    const gameId = this.scoreWidget.gameId;
+    const score = this.scoreWidget.score;
+
+    clearInterval(this.continuousDecreaseId);
+
+    this.getWinnerName().then(response => {
+      this.saveScore(gameId, response.value, score);
+    });
+
+    this.timer.reset();
+    this.board.init();
+    this.scoreWidget.score = MAX_SCORE;
+  }
+
+  async getWinnerName() {
+    return await Swal.fire({
       title: 'You Win!',
       text: 'Please enter your name: ',
       input: 'text',
@@ -104,10 +121,23 @@ export default class Game {
           return 'You need to write something!'
         }
       }
-    })
+    });
+  }
 
-    this.timer.reset();
-    this.board.init();
+  async saveScore(gameId, name, score) {
+    const response = await fetch("https://wgames-server.herokuapp.com/scores", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        gameId: gameId, 
+        name: name, 
+        value: score
+      })
+    });
+
+    return response.json(); // parses JSON response into native JavaScript objects
   }
 
   restartEvent() {
@@ -143,7 +173,7 @@ export default class Game {
     hammertime.on("swipeleft swiperight swipeup swipedown", (ev) => {
       var typeOfEvent = ev.type;
       if (typeOfEvent in EVENTS_TO_DIRECTIONS) {
-        let moveHappened = this.move(KEYS_TO_DIRECTIONS[keyCode]);
+        let moveHappened = this.move(EVENTS_TO_DIRECTIONS[typeOfEvent]);
         if (!this.checkWin() && moveHappened) this.updateScore(true, this.scoreMovePenalty);
       }
     });

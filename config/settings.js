@@ -2,7 +2,7 @@ const BOARD_LENGTH = 4;
 
 const SOUND_DIR = location.href + "res/snd/";
 
-console.log(location.href );
+const MAX_SCORE = 9999;
 
 // Keys for moves
 const KEYS_TO_DIRECTIONS = {
@@ -51,6 +51,7 @@ const MOVE_TO = {
 export { 
   BOARD_LENGTH, 
   SOUND_DIR, 
+  MAX_SCORE,
   KEYS_TO_DIRECTIONS, 
   EVENTS_TO_DIRECTIONS, 
   MOVE_TO
